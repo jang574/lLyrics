@@ -62,6 +62,10 @@ class Parser(object):
             headers={'Content-Type': 'application/soap+xml'},
         )
 
+        if resp.status_code != 200:
+            print("Request is NOK")
+            return ""
+
         return self.get_lyrics(resp)
 
     def get_lyrics(self, resp):
@@ -71,4 +75,8 @@ class Parser(object):
             print("can't find strLyric")
             return ""
 
-        return lyric_list[0].firstChild.nodeValue.replace("<br>", "\n").strip()
+        try:            
+            return lyric_list[0].firstChild.nodeValue.replace("<br>", "\n").strip()
+        except:
+            print("Parsing error")
+            return ""
