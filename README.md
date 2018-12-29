@@ -5,9 +5,9 @@ lLyrics is a plugin for [Rhythmbox](http://projects.gnome.org/rhythmbox/), which
 
 It is intended as a replacement of the built-in lyrics plugin of Rhythmbox with more features, better UI integration and more lyrics engines.
 
+It is forked from [dmo60/lLyrics](https://github.com/dmo60/lLyrics)
 
-
-![Screenshot](img/screenshot-small.png)
+![Screenshot](img/screenshot_korean_lyrics.png)
 
 
 
@@ -25,6 +25,7 @@ Lyrics sources
   - Genius.com
   - Darklyrics.com
   - Chartlyrics.com
+  - lyrics.alsong.co.kr
 
 It is also possible to retrieve lyrics from the built-in Rhythmbox lyrics plugin, but this is not recommended since it has some bugs and may cause instabilities.
 
@@ -43,6 +44,8 @@ To install lLyrics from source you will need the package `gettext`.
 #### Dependencies ####
 
 lLyrics can be run without the need of any additional packages, but it is recommended to install the python module **"chardet"** for better handling of different encodings.
+
+For [this forked lLyrics](https://github.com/jang574/lLyrics), you will need additional python modules : python3-requests, [jamotools](https://pypi.org/project/jamotools/)
 
 
 
