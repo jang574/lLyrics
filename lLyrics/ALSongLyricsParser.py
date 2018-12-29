@@ -49,7 +49,6 @@ class Parser(object):
         self.lyrics = ""
 
     def parse(self):
-
         data=TEMPLATE.format(
             title=self.title,
             artist=self.artist,
@@ -59,11 +58,7 @@ class Parser(object):
         # create lyrics Url
         resp = requests.post(
             'http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx',
-            data=TEMPLATE.format(
-                title=jamotools.join_jamos(self.title),
-                artist=jamotools.join_jamos(self.artist),
-                page=0,
-            ).encode(),
+            data,
             headers={'Content-Type': 'application/soap+xml'},
         )
 
