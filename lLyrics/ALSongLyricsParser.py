@@ -49,10 +49,10 @@ class Parser(object):
         self.lyrics = ""
 
     def parse(self):
-        data=TEMPLATE.format(
-            title=self.title,
-            artist=self.artist,
-            page=0,
+        data = TEMPLATE.format(
+            title = jamotools.join_jamos(self.title),
+            artist = jamotools.join_jamos(self.artist),
+            page = 0,
             ).encode()
 
         # create lyrics Url
