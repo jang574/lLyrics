@@ -12,12 +12,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from xml.dom import minidom
 import requests
 import re
 import string
 
 import Util
 import jamotools
+
 
 TEMPLATE = """\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -47,7 +49,6 @@ class Parser(object):
         self.lyrics = ""
 
     def parse(self):
-
         data=TEMPLATE.format(
             title=self.title,
             artist=self.artist,
@@ -57,33 +58,25 @@ class Parser(object):
         # create lyrics Url
         resp = requests.post(
             'http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx',
-            data=TEMPLATE.format(
-                title=jamotools.join_jamos(self.title),
-                artist=jamotools.join_jamos(self.artist),
-                page=0,
-            ).encode(),
+            data,
             headers={'Content-Type': 'application/soap+xml'},
         )
 
-        self.lyrics = self.get_lyrics(resp.text)
+        if resp.status_code != 200:
+            print("Request is NOK")
+            return ""
 
-        return self.lyrics
+        return self.get_lyrics(resp)
 
     def get_lyrics(self, resp):
-        # cut HTML source to relevant part
-        start = resp.find("<strLyric>")
-        if start == -1:
-            print("lyrics start not found")
+        dom = minidom.parseString(resp.content)
+        lyric_list = dom.getElementsByTagName('strLyric')
+        if not lyric_list:
+            print("can't find strLyric")
             return ""
-        resp = resp[(start + 10):]
-        end = resp.find("</strLyric>")
-        if end == -1:
-            print("lyrics end not found ")
+
+        try:            
+            return lyric_list[0].firstChild.nodeValue.replace("<br>", "\n").strip()
+        except:
+            print("Parsing error")
             return ""
-        resp = resp[:end]
-
-        # replace unwanted parts
-        resp = resp.replace("&lt;br&gt;", "\n")
-        resp = resp.strip()
-
-        return resp
