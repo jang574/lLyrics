@@ -45,8 +45,7 @@ To install lLyrics from source you will need the package `gettext`.
 
 lLyrics can be run without the need of any additional packages, but it is recommended to install the python module **"chardet"** for better handling of different encodings.
 
-For [this forked lLyrics](https://github.com/jang574/lLyrics), you will need additional python modules : python3-requests, [jamotools](https://pypi.org/project/jamotools/)
-
+For [this forked lLyrics](https://github.com/jang574/lLyrics), you will need additional python modules : python3-requests
 
 
 Installation
