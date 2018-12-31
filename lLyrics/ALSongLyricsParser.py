@@ -16,10 +16,9 @@ from xml.dom import minidom
 import requests
 import re
 import string
+import unicodedata
 
 import Util
-import jamotools
-
 
 TEMPLATE = """\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -50,8 +49,8 @@ class Parser(object):
 
     def parse(self):
         data = TEMPLATE.format(
-            title = jamotools.join_jamos(self.title),
-            artist = jamotools.join_jamos(self.artist),
+            title = unicodedata.normalize("NFC", self.title),
+            artist = unicodedata.normalize("NFC", self.artist),
             page = 0,
             ).encode()
 
